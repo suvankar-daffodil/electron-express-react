@@ -2,12 +2,11 @@
 const { app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
+const prompt = require("electron-prompt");
 
 const server = require("./server");
 
-// Menu.setApplicationMenu(null);
-
-console.log(isDev);
+Menu.setApplicationMenu(null);
 
 function createWindow() {
   // Create the browser window.

@@ -7,6 +7,7 @@
   "homepage": "./",
   "main": "./app/public/electron.js",
   "scripts": {
+    "start": "electron .",
     "dev": "concurrently \"webpack-dev-server --config ./webpack.dev.js\" \"wait-on http://localhost:8080 && electron .\"",
     "app-build": "rimraf ./build && mkdir build && webpack --progress -p --config webpack.prod.js",
     "preelectron-pack": "npm run app-build",
@@ -36,12 +37,17 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "electron-is-dev": "^1.1.0",
+    "electron-prompt": "^1.5.1",
+    "electron-sudo": "^4.0.12",
     "express": "^4.17.1",
     "path": "^0.12.7",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "sudo-prompt": "^9.1.1"
   },
   "build": {
     "appId": "com.example.electron-express-react",

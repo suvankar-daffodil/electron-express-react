@@ -1,43 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Axios from "axios";
 
 import "./App.css";
-import Production from "./config/production";
 
-const makeAPICall = async () => {
-  const headers = {
-    Accept: "application/json",
-    DeviceId: "TestCompressUserDevice",
-    OperatingSystem: "Android",
-    OperatingSystemVersion: "v-3.2",
-    DeviceName: "Samsung",
-    protocol: "ipsec",
-    ApiVersion: "v2",
-    "Content-Type": "application/x-www-form-urlencoded"
-  };
-
-  let urlencoded = new URLSearchParams();
-  urlencoded.append("extref", "TestCompress");
-
-  const config = {
-    method: "POST",
-    url: Production.url,
-    data: urlencoded,
-    headers: headers
-  };
-
-  return await Axios(config);
+const makeAPICall = async isConnected => {
+  return await Axios.post("http://localhost:5000/toggle-vpn", {
+    shouldConnect: !isConnected
+  });
 };
 
 const App = () => {
-  const [state, setState] = useState({ error: null, message: null });
-  useEffect(() => {
-    makeAPICall()
-      .then(response => setState(response?.data))
-      .catch(err => setState(err?.response?.data));
-  }, []);
+  const [isConnected, setConnected] = useState(false);
 
-  return <div>{state.message ? JSON.stringify(state) : "Please wait...."}</div>;
+  const handleClick = () => {
+    makeAPICall(isConnected)
+      .then(response => {
+        setConnected(!isConnected);
+      })
+      .catch(err => {
+        console.log(err?.response?.data);
+      });
+  };
+
+  return (
+    <div className="container">
+      <button onClick={handleClick}>
+        {isConnected ? "DISCONNECT" : "CONNECT"}
+      </button>
+      <div>{isConnected ? "STATUS - CONNECTED" : "STATUS - NOT CONNECTED"}</div>
+    </div>
+  );
 };
 
 export default App;
