@@ -43,7 +43,7 @@
     "electron-is-dev": "^1.1.0",
     "electron-prompt": "^1.5.1",
     "electron-sudo": "^4.0.12",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "path": "^0.12.7",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
